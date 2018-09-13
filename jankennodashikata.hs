@@ -20,9 +20,21 @@ getY :: [Int] -> Int
 getY (x:y:[]) = y
 
 {-その他の関数-}
+nmOfPar :: Int -> Int -> Int
+nmOfPar i x = (x `div` 5) - i
+
+nmOfGoo :: Int -> Int -> Int -> Int
+nmOfGoo i x y = x - (nmOfPar i y) - (nmOfCho i y)
+
+nmOfCho :: Int -> Int -> Int
+nmOfCho i x = (x - (5 * (nmOfPar i x))) `div` 2
+
+checkNmOfFinger :: Int -> Int -> Bool
+checkNmOfFinger i x = (x - (5 * (nmOfPar i x)) - (2 * (nmOfCho i x))) == 0
+
 ptnSearch :: Int -> Int -> Int -> [(Int,Int,Int)]
-ptnSearch i x y | (y - (5 * ((y `div` 5) - i)) - (2 * ((y - (5 * ((y `div` 5) - i))) `div` 2))) == 0 && x - ((y `div` 5) - i) - ((y - (5 * ((y `div` 5) - i))) `div` 2) >= 0 && ((y - (5 * ((y `div` 5) - i))) `div` 2) >= 0 && ((y `div` 5) - i) >= 0 = [(x - ((y `div` 5) - i) - ((y - (5 * ((y `div` 5) - i))) `div` 2) , ((y - (5 * ((y `div` 5) - i))) `div` 2) , ((y `div` 5) - i))]
-                | otherwise                                                                          = []
+ptnSearch i x y | checkNmOfFinger i y && nmOfGoo i x y >= 0 = [((nmOfGoo i x y) , (nmOfCho i y) , (nmOfPar i y))]
+                | otherwise                                                              = []
 
 ptnSearchCycle :: Int -> Int -> Int -> [(Int,Int,Int)]
 ptnSearchCycle i x y | (5 * i) > y  = []
