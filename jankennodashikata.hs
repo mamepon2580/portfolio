@@ -34,7 +34,7 @@ checkNmOfFinger i x = (x - (5 * (nmOfPar i x)) - (2 * (nmOfCho i x))) == 0
 
 ptnSearch :: Int -> Int -> Int -> [(Int,Int,Int)]
 ptnSearch i x y | checkNmOfFinger i y && nmOfGoo i x y >= 0 = [((nmOfGoo i x y) , (nmOfCho i y) , (nmOfPar i y))]
-                | otherwise                                                              = []
+                | otherwise                                 = []
 
 ptnSearchCycle :: Int -> Int -> Int -> [(Int,Int,Int)]
 ptnSearchCycle i x y | (5 * i) > y  = []
