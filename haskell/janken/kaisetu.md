@@ -1,9 +1,18 @@
-﻿paizaの練習問題がhaskellに対応していたので練習に問いてみました。
 
-[じゃんけんの手の出し方 (paizaランク A 相当)](https://paiza.jp/learning/janken)
+# paizaラーニングをHaskellで解く　じゃんけんの手の出し方 (paizaランク A 相当)
+
+paizaの練習問題がhaskellに対応していたので練習に問いてみました。
+
+じゃんけんの手の出し方 (paizaランク A 相当)
+https://paiza.jp/learning/janken
 
 健忘録です。
 ☆☆☆でテスト通りました。
+
+プログラムはgitのレポジトリに置いてあります。
+https://github.com/mamepon2580/portfolio/tree/master/haskell/janken
+
+↓↓↓ここからが内容↓↓↓
 
 ##main関数
 

@@ -1,9 +1,18 @@
-﻿paizaの練習問題がhaskellに対応していたので練習に解いてみました。
 
-[山折り谷折り(paizaランク A 相当)](https://paiza.jp/learning/origami)
+# paizaラーニングをHaskellで解く　山折り谷折り(paizaランク A 相当)
+
+paizaの練習問題がhaskellに対応していたので練習に解いてみました。
+
+山折り谷折り(paizaランク A 相当)
+https://paiza.jp/learning/origami
 
 健忘録です。
 ☆☆☆でテスト通りました。
+
+プログラムはgitのレポジトリに置いてあります。
+https://github.com/mamepon2580/portfolio/tree/master/haskell/yamatani
+
+↓↓↓ここからが内容↓↓↓
 
 ##main関数
 
@@ -52,4 +61,3 @@ fold i = fold (i - 1) ++ [0] ++ map reverse01 (reverse (fold (i - 1)))
 ```
 
 他のAランクの練習問題と比べてめちゃめちゃ簡単だった。
-

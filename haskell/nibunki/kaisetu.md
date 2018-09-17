@@ -1,14 +1,13 @@
 ﻿# Haskellで二分木探索を扱う対話型システム
 
-## 概要
+paizaの練習問題をHaskellで解き遊んでいたのですが、どうしてもSランクの問題だとリストでのソートを多用し、計算量が凄まじいことになるいたい。んで、テストが☆☆☆で通らなかったので、これはデータ構造作るしかないと思い、まずは二分木探索に手をつけてみました。
 
-paizaの練習問題をHaskellで解き遊んでいたのですが、どうしてもSランクの問題だとリストでのソートを多用し、計算量が凄まじいことになりテストが☆☆☆で通らなかったので、これはデータ構造作るしかないなと思い、まずは二分木探索に手をつけてみました。
+`data.txt`と`nibunki.hs`を予め同じディレクトリに作成しておき`nibunki.hs`を編集していきます。
 
-あとHaskellはIO処理が面倒臭いと良く耳にするので、どうせなら対話型で作ってみようと思い勉強にやってみました。
+プログラムはgitのレポジトリに置いてあります。
+https://github.com/mamepon2580/portfolio/tree/master/haskell/nibunki
 
-data.txtとnibunki.hsを予め同じディレクトリに作成しておきnibunki.hsを編集していきます。
-
-↓↓↓ここからが内容
+↓↓↓ここからが内容↓↓↓
 
 ## モジュール
 
@@ -156,7 +155,7 @@ data Tree = Leaf | Node Tree (Int, Int) Tree deriving (Show , Read)
 ```
 ## その他の関数
 
-### 挿入
+### insert関数
 
 ここでは挿入IOで出てきた`insertTreeCycle` を作る。
 
@@ -175,7 +174,7 @@ insertTreeCycle []     y = y
 insertTreeCycle (x:xs) y = insertTreeCycle xs (insertTree x y)
 ```
 
-### 削除
+### remove関数
 
 ここでは挿入IOで出てきた`removeTreeCycle` を作る。
 
@@ -192,7 +191,7 @@ findMaxIntPaer (Node a1 (a21,a22) a3 )     = findMaxIntPaer a3
 
 removeMaxIntPear :: Tree -> Tree
 removeMaxIntPear (Node a1 (a21,a22) Leaf )   = a1
-removeMaxIntPear (Node a1 (a21,a22) a3 )     =である Node a1 (a21,a22) (removeMaxIntPear a3)
+removeMaxIntPear (Node a1 (a21,a22) a3 )     = Node a1 (a21,a22) (removeMaxIntPear a3)
 
 findRemoveMaxList :: Tree -> Tree
 findRemoveMaxList (Node Leaf (a21,1) a3) = a3
@@ -211,7 +210,7 @@ removeTreeCycle []     y = y
 removeTreeCycle (x:xs) y = removeTreeCycle xs (removeTree x y)
 ```
 
-### 検索
+### find関数
 
 ここでは挿入IOで出てきた`findTreeCycle` を作る。
 
@@ -256,5 +255,5 @@ reset
 Leaf
 please order (insert,remove,find,check,quit,reset)
 quit
-[aki@localhost nibunkitansaku]$ 
+[aki@localhost nibunkitansaku]$
 ```
