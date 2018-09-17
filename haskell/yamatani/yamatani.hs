@@ -1,6 +1,6 @@
 {-山折り谷折り-}
 
-{-IO-}
+{-main関数-}
 main = do
   x <- getLine
   putStrLn (intListToString (fold (read x :: Int)))
@@ -10,7 +10,7 @@ intListToString :: [Int] -> String
 intListToString [] = []
 intListToString (x:xs) = (show x) ++ (intListToString xs)
 
-{-関数-}
+{-その他の関数-}
 reverse01 :: Int -> Int
 reverse01 x | x == 0 = 1
             | x == 1 = 0
