@@ -54,8 +54,8 @@ findNumber = do
   let oldDataTree = (\x -> read x :: Tree) oldDataString
   nmString <- getLine
   let nmIntList = map (\x -> read x :: Int) (words nmString)
-  let newDataInt = show $ findTreeCycle nmIntList oldDataTree
-  putStrLn (newData)
+  let numberList = show $ findTreeCycle nmIntList oldDataTree
+  putStrLn (numberList)
 
 listBlankString :: [Int] -> String
 listBlankString [] = []
