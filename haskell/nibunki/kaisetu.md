@@ -42,61 +42,41 @@ main = do
 
 ## IO関数
 
-### 挿入IO
+### 挿入IO、削除IO
 
-挿入を行うIO処理を作る。二分木を読み込み、スペースで区切られた数字の文字列をターミナルから受け取り、その数字を前から順に二分木に挿入する。
+挿入と削除を行うIO処理を作る。予め`(Int -> Tree -> Tree)` の型を受け取るIO関数を作っておき、再利用する形で挿入IOと削除IOに適用する。二分木を読み込み、スペースで区切られた数字の文字列をターミナルから受け取り、その数字を前から順に二分木に挿入する。
 
-- **`insCycle`** は、まず、`oldDataString` に`data.txt` から読み込んだ文字列のデータを束縛する。次に、それを`read` を使って木構造として読み込んだ値を`oldDataTree` に束縛する。そして、スペースで区切られた文字列を受け取り、`nmString` に束縛する。さらに、`map` と`read` を使って、Intのリストに整形し、その値を`nmIntList` に束縛する。`insertCycle` に`oldDataTree` と`nmIntList` を渡し、Intのリストを二分木に挿入し、その値を`newData` に束縛する。`openTempFile` を使って一時的にデータを保管する場所を作り、`hd`の中に、`newData` の値を格納する。`removeFile` で`data.txt`を削除し、`renameFile` で`tm` の名前を`data.txt` に変更する。  
+- readWriteFncIO は、関数を引数に持ち、まず、`oldDataString` に`data.txt` から読み込んだ文字列のデータを束縛する。次に、それを`read` を使って木構造として読み込んだ値を`oldDataTree` に束縛する。そして、スペースで区切られた文字列を受け取り、`nmString` に束縛する。さらに、`map` と`read` を使って、Intのリストに整形し、その値を`nmIntList` に束縛する。引数の関数に`oldDataTree` と`nmIntList` を渡し、Intのリストを二分木に挿入し、その値を`newData` に束縛する。`openTempFile` を使って一時的にデータを保管する場所を作り、`hd`の中に、`newData` の値を格納する。`removeFile` で`data.txt`を削除し、`renameFile` で`tm` の名前を`data.txt` に変更する。
 
-`insertCycle` についてはその他の関数で説明する。
+- **`insCycle`** は、引数の関数として`insertTreeCycle` を適用する。
+
+- **`remoCycle`** は、`insCycle` とほぼ同じ処理をするが、`insertTreeCycle` ではなく、`removeTreeCycle` を適用する。
+
+`insertCycle` と`removeTreeCycle` についてはその他の関数で説明する。
 
 ```haskell
+readWriteFncIO :: ([Int] -> Tree -> Tree) -> IO ()
+readWriteFncIO func = do
+  oldDataString <- readFile "data.txt"
+  let oldDataTree = (\x -> read x :: Tree) oldDataString
+  nmString <- getLine
+  let nmIntList = map (\x -> read x :: Int) (words nmString)
+  let newData = show $ func nmIntList oldDataTree
+  putStrLn (newData)
+  (tm , hd) <- openTempFile "." "temp"
+  hPutStr hd newData
+  hClose hd
+  removeFile "data.txt"
+  renameFile tm "data.txt"
+
 insCycle :: IO ()
-insCycle = do
-  oldDataString <- readFile "data.txt"
-  let oldDataTree = (\x -> read x :: Tree) oldDataString
-  nmString <- getLine
-  let nmIntList = map (\x -> read x :: Int) (words nmString)
-  let newData = show $ insertTreeCycle nmIntList oldDataTree
-  putStrLn (newData)
-  (tm , hd) <- openTempFile "." "temp"
-  hPutStr hd newData
-  hClose hd
-  removeFile "data.txt"
-  renameFile tm "data.txt"
-```
+insCycle = readWriteFncIO insertTreeCycle
 
-### 削除IO
-
-削除を行うIO処理を作る。二分木を読み込み、スペースで区切られた数字の文字列をターミナルから受け取り、その数字を前から順に二分木から削除する。
-
-- **`remoCycle`** は、`insCycle` とほぼ同じ処理をするが、`insertTreeCycle` ではなく、`removeTreeCycle` を用いる。
-
-`removeTreeCycle` についてはその他の関数で説明する。
-
-```haskell
 remoCycle :: IO ()
-remoCycle = do
-  oldDataString <- readFile "data.txt"
-  let oldDataTree = (\x -> read x :: Tree) oldDataString
-  nmString <- getLine
-  let nmIntList = map (\x -> read x :: Int) (words nmString)
-  let newData = show $ removeTreeCycle nmIntList oldDataTree
-  putStrLn (newData)
-  (tm , hd) <- openTempFile "." "temp"
-  hPutStr hd newData
-  hClose hd
-  removeFile "data.txt"
-  renameFile tm "data.txt"
+remoCycle = readWriteFncIO removeTreeCycle
 ```
 
 ### 検索IO
-
-検索を行うIO処理を作る。二分木を読み込み、スペースで区切られた数字の文字列をターミナルから受け取り、その数字を前から順に二分木にどれだけあるか調べる。
-
-
-- **`findNumber`** は、`insCycle` とほぼ同じ処理をするが、`insertTreeCycle` ではなく、`findTreeCycle` を用いる。また、検索を行うだけで書き込みは行わないので、後半の`putStrLn (newData)` 以降は消去している。
-- **`ListBlankString`** は、出力する際に、数字をスペースで区切り文字列として返す関数である。
 
 `findTreeCycle` についてはその他の関数で説明する。
 
