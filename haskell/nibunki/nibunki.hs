@@ -20,25 +20,33 @@ main = do
     "reset" -> setLeaf >> main
     _ -> putStrLn ("error") >> main
 
-readWriteFncIO :: ([Int] -> Tree -> Tree) -> IO ()
-readWriteFncIO func = do
+readFncIO :: ([Int] -> Tree -> Tree) -> IO (String)
+readFncIO func = do
   oldDataString <- readFile "data.txt"
   let oldDataTree = (\x -> read x :: Tree) oldDataString
   nmString <- getLine
   let nmIntList = map (\x -> read x :: Int) (words nmString)
   let newData = show $ func nmIntList oldDataTree
-  putStrLn (newData)
+  return(newData)
+
+writeFncIO :: String -> IO(String)
+writeFncIO newData = do
   (tm , hd) <- openTempFile "." "temp"
   hPutStr hd newData
   hClose hd
   removeFile "data.txt"
   renameFile tm "data.txt"
+  return(newData)
 
 insCycle :: IO ()
-insCycle = readWriteFncIO insertTreeCycle
+insCycle = readFncIO insertTreeCycle >>= (\newData ->
+           writeFncIO newData) >>= (\newData ->
+           putStrLn(newData))
 
 remoCycle :: IO ()
-remoCycle = readWriteFncIO removeTreeCycle
+remoCycle = readFncIO removeTreeCycle >>= (\newData ->
+            writeFncIO newData) >>= (\newData ->
+            putStrLn(newData))
 
 findNumber :: IO ()
 findNumber = do
@@ -46,7 +54,7 @@ findNumber = do
   let oldDataTree = (\x -> read x :: Tree) oldDataString
   nmString <- getLine
   let nmIntList = map (\x -> read x :: Int) (words nmString)
-  let newData = show $ findTreeCycle nmIntList oldDataTree
+  let newDataInt = show $ findTreeCycle nmIntList oldDataTree
   putStrLn (newData)
 
 listBlankString :: [Int] -> String

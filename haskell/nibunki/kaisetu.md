@@ -46,7 +46,9 @@ main = do
 
 挿入と削除を行うIO処理を作る。予め`(Int -> Tree -> Tree)` の型を受け取るIO関数を作っておき、再利用する形で挿入IOと削除IOに適用する。二分木を読み込み、スペースで区切られた数字の文字列をターミナルから受け取り、その数字を前から順に二分木に挿入する。
 
-- readWriteFncIO は、関数を引数に持ち、まず、`oldDataString` に`data.txt` から読み込んだ文字列のデータを束縛する。次に、それを`read` を使って木構造として読み込んだ値を`oldDataTree` に束縛する。そして、スペースで区切られた文字列を受け取り、`nmString` に束縛する。さらに、`map` と`read` を使って、Intのリストに整形し、その値を`nmIntList` に束縛する。引数の関数に`oldDataTree` と`nmIntList` を渡し、Intのリストを二分木に挿入し、その値を`newData` に束縛する。`openTempFile` を使って一時的にデータを保管する場所を作り、`hd`の中に、`newData` の値を格納する。`removeFile` で`data.txt`を削除し、`renameFile` で`tm` の名前を`data.txt` に変更する。
+- **`readFncIO`** は、関数を引数に持ち、まず、`oldDataString` に`data.txt` から読み込んだ文字列のデータを束縛する。次に、それを`read` を使って木構造として読み込んだ値を`oldDataTree` に束縛する。そして、スペースで区切られた文字列を受け取り、`nmString` に束縛する。さらに、`map` と`read` を使って、Intのリストに整形し、その値を`nmIntList` に束縛する。引数の関数に`oldDataTree` と`nmIntList` を渡し、Intのリストを二分木に挿入し、その値を`newData` に束縛する。
+
+- **`writeFncIO`** は`openTempFile` を使って一時的にデータを保管する場所を作り、`hd`の中に、`newData` の値を格納する。`removeFile` で`data.txt`を削除し、`renameFile` で`tm` の名前を`data.txt` に変更する。
 
 - **`insCycle`** は、引数の関数として`insertTreeCycle` を適用する。
 
@@ -55,25 +57,33 @@ main = do
 `insertCycle` と`removeTreeCycle` についてはその他の関数で説明する。
 
 ```haskell
-readWriteFncIO :: ([Int] -> Tree -> Tree) -> IO ()
-readWriteFncIO func = do
+readFncIO :: ([Int] -> Tree -> Tree) -> IO (String)
+readFncIO func = do
   oldDataString <- readFile "data.txt"
   let oldDataTree = (\x -> read x :: Tree) oldDataString
   nmString <- getLine
   let nmIntList = map (\x -> read x :: Int) (words nmString)
   let newData = show $ func nmIntList oldDataTree
-  putStrLn (newData)
+  return(newData)
+
+writeFncIO :: String -> IO(String)
+writeFncIO newData = do
   (tm , hd) <- openTempFile "." "temp"
   hPutStr hd newData
   hClose hd
   removeFile "data.txt"
   renameFile tm "data.txt"
+  return(newData)
 
 insCycle :: IO ()
-insCycle = readWriteFncIO insertTreeCycle
+insCycle = readFncIO insertTreeCycle >>= (\newData ->
+           writeFncIO newData) >>= (\newData ->
+           putStrLn(newData))
 
 remoCycle :: IO ()
-remoCycle = readWriteFncIO removeTreeCycle
+remoCycle = readFncIO removeTreeCycle >>= (\newData ->
+            writeFncIO newData) >>= (\newData ->
+            putStrLn(newData))
 ```
 
 ### 検索IO
