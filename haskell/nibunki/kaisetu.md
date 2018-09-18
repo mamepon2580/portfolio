@@ -57,8 +57,8 @@ main = do
 `insertCycle` と`removeTreeCycle` についてはその他の関数で説明する。
 
 ```haskell
-readFncIO :: ([Int] -> Tree -> Tree) -> IO (String)
-readFncIO func = do
+readFuncIO :: ([Int] -> Tree -> Tree) -> IO (String)
+readFuncIO func = do
   oldDataString <- readFile "data.txt"
   let oldDataTree = (\x -> read x :: Tree) oldDataString
   nmString <- getLine
@@ -66,8 +66,8 @@ readFncIO func = do
   let newData = show $ func nmIntList oldDataTree
   return(newData)
 
-writeFncIO :: String -> IO(String)
-writeFncIO newData = do
+writeFuncIO :: String -> IO(String)
+writeFuncIO newData = do
   (tm , hd) <- openTempFile "." "temp"
   hPutStr hd newData
   hClose hd
@@ -76,13 +76,13 @@ writeFncIO newData = do
   return(newData)
 
 insCycle :: IO ()
-insCycle = readFncIO insertTreeCycle >>= (\newData ->
-           writeFncIO newData) >>= (\newData ->
+insCycle = readFuncIO insertTreeCycle >>= (\newData ->
+           writeFuncIO newData) >>= (\newData ->
            putStrLn(newData))
 
 remoCycle :: IO ()
-remoCycle = readFncIO removeTreeCycle >>= (\newData ->
-            writeFncIO newData) >>= (\newData ->
+remoCycle = readFuncIO removeTreeCycle >>= (\newData ->
+            writeFuncIO newData) >>= (\newData ->
             putStrLn(newData))
 ```
 
@@ -170,7 +170,7 @@ insertTreeCycle (x:xs) y = insertTreeCycle xs (insertTree x y)
 
 - **`findMaxIntPear`** は、引数の二分木に対し、今いるノードの右側が`Leaf` であれば探索をやめ、`(Int,Int)` の値を返し、また、`Leaf` でなければ、その右側の二分木に対し`findMaxIntPear` を再帰的に適応する関数である。
 - **`removeMaxIntPear`** は、`findMaxIntPear` と基本的には同じなのですが、そのノードの`(Int,Int)` を返すのではなく、それそのものを削除しその下の二分木を連結する。
-- **`findRemoveMaxList`** は、少し面倒である。途中にあるノードのタプルの個数が0になってしまう場合それをそのまま削除すると、二分木が二つ残ってしまい接続することができない。なので`findMaxIntPear` と`removeMaxIntPear` を使い、左側の二分木の中で一番大きいノードを見つけ出しそれを持って来て削除した部分の補修に使う。この値は右側の二分木のどのノードより値は小さいが、左側の二分木のどの値よりも大きいので全体の木構造を壊さずに住む。
+- **`findRemoveMaxList`** は、少し面倒である。途中にあるノードのタプルの個数が0になってしまう場合それをそのまま削除すると、二分木が二つ残ってしまい接続することができない。なので`findMaxIntPear` と`removeMaxIntPear` を使い、左側の二分木の中で一番大きいノードを見つけ出しそれを持って来て削除した部分の補修に使う。この値は右側の二分木のどのノードより値は小さいが、左側の二分木のどの値よりも大きいので全体の木構造を壊さずに済む。
 - **`removeTree`** は、引数のIntの値が、今いるノードの数より大きければ右側に、小さければ左側に`removeTree` を再帰的に適応する関数である。また、ノードが`Leaf` のときはそのまま何もせず、同じ値をとる時はそのノードの個数の値を1減らす。そのとき、1つしかない場合にはそのノードを削除し、`findRemoveMaxList` を適応する関数である。
 - **`removeTreeCycle`** は、引数のIntのリストに対し、再帰的に`removeTree` を適応し、二分木から削除する関数である。
 

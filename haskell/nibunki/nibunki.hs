@@ -20,8 +20,8 @@ main = do
     "reset" -> setLeaf >> main
     _ -> putStrLn ("error") >> main
 
-readFncIO :: ([Int] -> Tree -> Tree) -> IO (String)
-readFncIO func = do
+readFuncIO :: ([Int] -> Tree -> Tree) -> IO (String)
+readFuncIO func = do
   oldDataString <- readFile "data.txt"
   let oldDataTree = (\x -> read x :: Tree) oldDataString
   nmString <- getLine
@@ -29,8 +29,8 @@ readFncIO func = do
   let newData = show $ func nmIntList oldDataTree
   return(newData)
 
-writeFncIO :: String -> IO(String)
-writeFncIO newData = do
+writeFuncIO :: String -> IO(String)
+writeFuncIO newData = do
   (tm , hd) <- openTempFile "." "temp"
   hPutStr hd newData
   hClose hd
@@ -39,13 +39,13 @@ writeFncIO newData = do
   return(newData)
 
 insCycle :: IO ()
-insCycle = readFncIO insertTreeCycle >>= (\newData ->
-           writeFncIO newData) >>= (\newData ->
+insCycle = readFuncIO insertTreeCycle >>= (\newData ->
+           writeFuncIO newData) >>= (\newData ->
            putStrLn(newData))
 
 remoCycle :: IO ()
-remoCycle = readFncIO removeTreeCycle >>= (\newData ->
-            writeFncIO newData) >>= (\newData ->
+remoCycle = readFuncIO removeTreeCycle >>= (\newData ->
+            writeFuncIO newData) >>= (\newData ->
             putStrLn(newData))
 
 findNumber :: IO ()
