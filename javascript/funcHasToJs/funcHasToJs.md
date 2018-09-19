@@ -2,16 +2,17 @@
 # Haskellの関数をモジュールに頼らずJavascriptで作る頭の体操
 
 個人的なメモで分からなかった所や、出来たことを残しておく健忘録です。
-直したり、増やしたり、随時更新していきます。
-
-消しちゃったらごめんね。
+直したり、増やしたり、随時更新していきます。消しちゃったらごめんね。
 
 Haskellっぽさを出すためにfor文ではなく再帰で統一して書いています。
 今のところ配列についての関数が多いです。
 
+プログラムはgitのレポジトリに置いてあります。
+https://github.com/mamepon2580/portfolio/tree/master/javascript/funcHasToJs
+
 ↓↓↓ここからが内容↓↓↓
 
-***
+## 関数型Javascriptの関数
 
 ### length関数
 
@@ -192,3 +193,7 @@ function sum(xs){
   return(y);
 }
 ```
+## 参考文献
+
+JavaScriptで関数型プログラミングの入門
+https://qiita.com/takeharu/items/cf98d352ff574c5ac536
