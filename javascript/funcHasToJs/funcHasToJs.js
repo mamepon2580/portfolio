@@ -42,13 +42,42 @@ function init(xs){
       y = xs[i]
       return(makeLastNumber(i + 1));
     }else{
-      return (y);
+      return(y);
     }
   }
   let i = 0;
   let y = undefined;
   let z = makeLastNumber(i);
   return(z);
+}
+
+/*delete*/
+function deleteFirst(xs,y){
+  function makeNewArr1(i){
+    if(xs[i] !== undefined){
+      if(xs[i] !== y){
+        zs[i] = xs[i];
+        return(makeNewArr1(i + 1));
+      }else{
+        function makeNewArr2(i){
+          if(xs[i + 1] !== undefined){
+            zs[i] = xs[i + 1];
+            return(makeNewArr2(i + 1));
+          }else{
+            return(zs);
+          }
+        }
+        let ws = makeNewArr2(i);
+        return(ws)
+      }
+    }else{
+      return(zs);
+    }
+  }
+  let i = 0;
+  let zs =[];
+  let vs = makeNewArr1(i);
+  return(vs);
 }
 
 /*reverse*/
@@ -86,7 +115,23 @@ function arrPlus(xs,ys){
   let yl = length(ys);
   let zs =[];
   let ws = makeNewArr(i);
-  return(zs);
+  return(ws);
+}
+
+/*zipper*/
+function zipper(xs,ys){
+  function makeNewArrTuple(i){
+    if(xs[i] !== undefined && ys[i] !== undefined){
+      zs[i] = [xs[i],ys[i]];
+      return(makeNewArrTuple(i + 1));
+    }else{
+      return(zs);
+    }
+  }
+  let i = 0;
+  let zs =[];
+  let ws = makeNewArrTuple(i);
+  return(ws);
 }
 
 /*map*/
@@ -106,7 +151,7 @@ function mapping(func,xs){
 }
 
 /*foldl*/
-function foldLeft(func,xs,y){
+function foldLeft(func,y,xs){
   function fold(i){
     if(xs[i] !== undefined){
       return(func(xs[i],fold(i + 1)));
@@ -131,8 +176,8 @@ function nullCheckList(xs) {
     }
   }
   let i = 0;
-  let ys = nullCheck(i);
-  return (ys);
+  let bool = nullCheck(i);
+  return (bool);
 }
 
 /*sum*/
@@ -148,3 +193,15 @@ function sum(xs){
   let y = plusCycle(i);
   return(y);
 }
+
+/*maximum*/
+
+/*minimum*/
+
+/*insertSort*/
+
+/*bubbleSort*/
+
+/*mergeSort*/
+
+/*quickSort*/

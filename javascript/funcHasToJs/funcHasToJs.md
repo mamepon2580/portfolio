@@ -12,11 +12,12 @@ https://github.com/mamepon2580/portfolio/tree/master/javascript/funcHasToJs
 
 ↓↓↓ここからが内容↓↓↓
 
-## 関数型Javascriptの関数
+## 関数型Javascript
 
 ### length関数
 
 ```Javascript
+//length :: [a] -> Int
 function length(xs) {
   function searchUndefined(i){
     if(xs[i] !== undefined){
@@ -34,6 +35,7 @@ function length(xs) {
 ### head関数
 
 ```Javascript
+//head :: [a] -> a
 function head(xs) {
  return(xs[0]);
 }
@@ -42,6 +44,7 @@ function head(xs) {
 ### tail関数
 
 ```javascript
+//tail :: [a] -> [a]
 function tail(xs){
   function makeNewArr(i){
     if (xs[i] !== undefined){
@@ -61,6 +64,7 @@ function tail(xs){
 ### init関数
 
 ```Javascript
+//init :: [a] -> [a]
 function init(xs){
   function makeLastNumber(i){
     if (xs[i] !== undefined){
@@ -78,9 +82,43 @@ function init(xs){
 
 ```
 
+### delete関数
+
+```javascript
+//deleteFirst :: [a] -> [a]
+function deleteFirst(xs,y){
+  function makeNewArr1(i){
+    if(xs[i] !== undefined){
+      if(xs[i] !== y){
+        zs[i] = xs[i];
+        return(makeNewArr1(i + 1));
+      }else{
+        function makeNewArr2(i){
+          if(xs[i + 1] !== undefined){
+            zs[i] = xs[i + 1];
+            return(makeNewArr2(i + 1));
+          }else{
+            return(zs);
+          }
+        }
+        let ws = makeNewArr2(i);
+        return(ws)
+      }
+    }else{
+      return(zs);
+    }
+  }
+  let i = 0;
+  let zs =[];
+  let vs = makeNewArr1(i);
+  return(vs);
+}
+```
+
 ### reverse関数
 
 ```Javascript
+//reverse :: [a] -> [a]
 function reverse(xs){
   function makeNewArr(i){
       if(xs[i] !== undefined){
@@ -101,6 +139,7 @@ function reverse(xs){
 ### list結合
 
 ```Javascript
+//arrPuls :: [a] -> [a] -> [a]
 function arrPlus(xs,ys){
   function makeNewArr(i){
     if(i < xl + yl){
@@ -118,13 +157,34 @@ function arrPlus(xs,ys){
   let yl = length(ys);
   let zs =[];
   let ws = makeNewArr(i);
-  return(zs);
+  return(ws);
+}
+```
+
+### zipper関数(もどき)
+
+```javascript
+//zipper :: [a] -> [a] -> [[a]]
+function zipper(xs,ys){
+  function makeNewArrTuple(i){
+    if(xs[i] !== undefined && ys[i] !== undefined){
+      zs[i] = [xs[i],ys[i]];
+      return(makeNewArrTuple(i + 1));
+    }else{
+      return(zs);
+    }
+  }
+  let i = 0;
+  let zs =[];
+  let ws = makeNewArrTuple(i);
+  return(ws);
 }
 ```
 
 ### map関数
 
 ```Javascript
+//mapping :: (a -> b) -> [a] -> [b]
 function mapping(func,xs){
   function mapCycle(i){
     if(xs[i] !== undefined){
@@ -144,7 +204,8 @@ function mapping(func,xs){
 ### foldl関数
 
 ```Javascript
-function foldLeft(func,xs,y){
+//foldLeft :: (a -> b -> a) -> a -> [b] -> a
+function foldLeft(func,y,xs){
   function fold(i){
     if(xs[i] !== undefined){
       return(func(xs[i],fold(i + 1)));
@@ -161,6 +222,7 @@ function foldLeft(func,xs,y){
 ### null関数
 
 ```Javascript
+//nullCheckList :: [a] -> Bool
 function nullCheckList(xs) {
   function nullCheck(i){
     if(xs[i] === undefined){
@@ -172,14 +234,15 @@ function nullCheckList(xs) {
     }
   }
   let i = 0;
-  let ys = nullCheck(i);
-  return (ys);
+  let bool = nullCheck(i);
+  return (bool);
 }
 ```
 
 ### sum関数
 
 ```Javascript
+//Num a => [a] -> a
 function sum(xs){
   function plusCycle(i){
     if (xs[i] !== undefined) {
@@ -193,7 +256,3 @@ function sum(xs){
   return(y);
 }
 ```
-## 参考文献
-
-JavaScriptで関数型プログラミングの入門
-https://qiita.com/takeharu/items/cf98d352ff574c5ac536
