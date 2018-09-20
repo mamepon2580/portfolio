@@ -15,8 +15,55 @@ function length(xs) {
 }
 
 /*head*/
+//head :: [a] -> a
 function head(xs) {
  return(xs[0]);
+}
+
+
+/*last*/
+//last :: [a] -> a
+function last(xs){
+  xl = length(xs);
+  y = xs[xl - 1];
+  return(y);
+}
+
+/*take*/
+//take:: Int -> [a] -> [a]
+function take(x,ys){
+  function makeNewArr(i){
+    if(ys[i] === undefined || i === x){
+      return(zs);
+    }else{
+      zs[i] = ys[i];
+      return(makeNewArr(i + 1));
+    }
+  }
+  let i = 0;
+  let zs = [];
+  let ws = makeNewArr(i);
+  return(ws);
+}
+
+/*drop*/
+//drop :: Int -> [a] -> [a]
+function drop(x,ys){
+  function makeNewArr(i,j){
+    if(ys[j] === undefined){
+      return(zs);
+    }else if(j >= x){
+      zs[i] = ys[j];
+      return(makeNewArr(i + 1,j + 1));
+    }else{
+      return(makeNewArr(i,j + 1));
+    }
+  }
+  let i = 0;
+  let j = 0;
+  let zs = [];
+  let ws = makeNewArr(i,j);
+  return(ws);
 }
 
 /*tail*/
@@ -164,15 +211,46 @@ function foldLeft(func,y,xs){
   return(z);
 }
 
+/*curryFunction*/
+function curry(func){
+  return(function(Arg1){
+    return(function(Arg2){
+      return(func(Arg1,Arg2))
+    });
+  });
+}
+
+/*filter*/
+//(a -> Bool) -> [a] -> [a]
+function filter(func,xs){
+  function filterCycle(i,j){
+    if(xs[j] !== undefined){
+      if(func(xs[j])){
+        return(filterCycle(i,j + 1));
+      }else{
+        ys[i] = xs[j]
+        return(filterCycle(i + 1,j + 1));
+      }
+    }else{
+      return(ys);
+    }
+  }
+  let i = 0;
+  let j = 0;
+  let ys = [];
+  let zs = filterCycle(i,j);
+  return(ys);
+}
+
 /*null*/
 function nullCheckList(xs) {
   function nullCheck(i){
-    if(xs[i] === undefined){
+    if(xs[i] === null){
       return(true);
     }else if (xs[i] === undefined){
-      return(nullCheck(i + 1));
-    }else{
       return(false);
+    }else{
+      return(nullCheck(i + 1));
     }
   }
   let i = 0;
@@ -195,8 +273,56 @@ function sum(xs){
 }
 
 /*maximum*/
+function maxList(xs){
+  function maxSaveCycle(i){
+    if (xs[i] !== undefined) {
+      if(y <= xs[i] || y === null){
+        y = xs[i]
+        return (maxSaveCycle(i + 1));
+      }else{
+        return (maxSaveCycle(i + 1));
+      }
+    }else{
+      return(y);
+    }
+  }
+  let i = 0;
+  let y = null;
+  let z = maxSaveCycle(i)
+  return(y);
+}
 
 /*minimum*/
+function minList(xs){
+  function minSaveCycle(i){
+    if (xs[i] !== undefined) {
+      if(y >= xs[i] || y === null){
+        y = xs[i]
+        return (minSaveCycle(i + 1));
+      }else{
+        return (minSaveCycle(i + 1));
+      }
+    }else{
+      return(y);
+    }
+  }
+  let i = 0;
+  let y = null;
+  let z = minSaveCycle(i)
+  return(y);
+}
+
+/*prodact*/
+
+/*foldr*/
+
+/*elem*/
+
+/*all*/
+
+/*any*/
+
+/*zipWith*/
 
 /*insertSort*/
 
