@@ -7,12 +7,15 @@
 Haskellっぽさを出すためにfor文ではなく再帰で統一して書いています。
 今のところ配列についての関数が多いです。
 
+でも配列をリストとして扱うのには無理があるので、今回はメソッド縛りだったけどちゃんと使った方がいいです。
+目指すところは、object指向と関数型をうまくいいとこ取りする感じです。
+
 プログラムはgitのレポジトリに置いてあります。
 https://github.com/mamepon2580/portfolio/tree/master/javascript/funcHasToJs
 
 ↓↓↓ここからが内容↓↓↓
 
-## 関数型Javascript
+## 関数型JavaScript
 
 ### length関数
 
@@ -40,6 +43,18 @@ function head(xs) {
  return(xs[0]);
 }
 ```
+
+### last関数
+
+```javascript
+//last :: [a] -> a
+function last(xs){
+  xl = length(xs);
+  y = xs[xl - 1];
+  return(y);
+}
+```
+
 
 ### tail関数
 
@@ -82,6 +97,50 @@ function init(xs){
 
 ```
 
+### take関数
+
+```javascript
+//take:: Int -> [a] -> [a]
+function take(x,ys){
+  function makeNewArr(i){
+    if(ys[i] === undefined || i === x){
+      return(zs);
+    }else{
+      zs[i] = ys[i];
+      return(makeNewArr(i + 1));
+    }
+  }
+  let i = 0;
+  let zs = [];
+  let ws = makeNewArr(i);
+  return(ws);
+}
+```
+
+### drop関数
+
+```javascript
+
+//drop :: Int -> [a] -> [a]
+function drop(x,ys){
+  function makeNewArr(i,j){
+    if(ys[j] === undefined){
+      return(zs);
+    }else if(j >= x){
+      zs[i] = ys[j];
+      return(makeNewArr(i + 1,j + 1));
+    }else{
+      return(makeNewArr(i,j + 1));
+    }
+  }
+  let i = 0;
+  let j = 0;
+  let zs = [];
+  let ws = makeNewArr(i,j);
+  return(ws);
+}
+```
+
 ### delete関数
 
 ```javascript
@@ -93,14 +152,6 @@ function deleteFirst(xs,y){
         zs[i] = xs[i];
         return(makeNewArr1(i + 1));
       }else{
-        function makeNewArr2(i){
-          if(xs[i + 1] !== undefined){
-            zs[i] = xs[i + 1];
-            return(makeNewArr2(i + 1));
-          }else{
-            return(zs);
-          }
-        }
         let ws = makeNewArr2(i);
         return(ws)
       }
@@ -139,8 +190,8 @@ function reverse(xs){
 ### list結合
 
 ```Javascript
-//arrPuls :: [a] -> [a] -> [a]
-function arrPlus(xs,ys){
+//arrConect :: [a] -> [a] -> [a]
+function arrConect(xs,ys){
   function makeNewArr(i){
     if(i < xl + yl){
       if(i < xl){
@@ -161,7 +212,19 @@ function arrPlus(xs,ys){
 }
 ```
 
+### concat
+
+```javascript
+//concat :: [[a]] -> [a]
+function concat(xss){
+  let ys = foldLeft(arrConect,[],xss)
+  return(ys)
+}
+```
+
 ### zipper関数(もどき)
+
+→タプルがないのでとりあえず配列で作った
 
 ```javascript
 //zipper :: [a] -> [a] -> [[a]]
@@ -177,6 +240,26 @@ function zipper(xs,ys){
   let i = 0;
   let zs =[];
   let ws = makeNewArrTuple(i);
+  return(ws);
+}
+```
+
+### zipWith
+
+```javascript
+//zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
+function zipWith(func,xs,ys){
+  function funcCycle(i){
+    if(xs[i] !== undefined && ys[i] !== undefined){
+      zs[i] = func(xs[i],ys[i]);
+      return(funcCycle(i + 1));
+    }else{
+      return(zs);
+    }
+  }
+  let i = 0;
+  let zs = [];
+  let ws = funcCycle(i);
   return(ws);
 }
 ```
@@ -219,18 +302,170 @@ function foldLeft(func,y,xs){
 }
 ```
 
-### null関数
+### curry関数
+
+```javascript
+//curry :: (a -> b -> c) -> (a -> (b -> c))
+function curry(func){
+  return(function(Arg1){
+    return(function(Arg2){
+      return(func(Argument1,Argument2))
+    });
+  });
+}
+```
+
+### maximum関数
+
+```javascript
+//maxList :: [a] -> a
+function maxList(xs){
+  function maxSaveCycle(i){
+    if (xs[i] !== undefined) {
+      if(y <= xs[i] || y === null){
+        y = xs[i]
+        return (maxSaveCycle(i + 1));
+      }else{
+        return (maxSaveCycle(i + 1));
+      }
+    }else{
+      return(y);
+    }
+  }
+  let i = 0;
+  let y = null;
+  let z = maxSaveCycle(i)
+  return(y);
+}
+```
+
+### minimum関数
+
+```javascript
+//mixList :: [a] -> a
+function minList(xs){
+  function minSaveCycle(i){
+    if (xs[i] !== undefined) {
+      if(y >= xs[i] || y === null){
+        y = xs[i]
+        return (minSaveCycle(i + 1));
+      }else{
+        return (minSaveCycle(i + 1));
+      }
+    }else{
+      return(y);
+    }
+  }
+  let i = 0;
+  let y = null;
+  let z = minSaveCycle(i)
+  return(y);
+}
+```
+
+### filter関数
+
+```javascript
+//filter :: (a -> Bool) -> [a] -> [a]
+function filter(func,xs){
+  function filterCycle(i,j){
+    if(xs[j] !== undefined){
+      if(func(xs[j])){
+        return(filterCycle(i,j + 1));
+      }else{
+        ys[i] = xs[j]
+        return(filterCycle(i + 1,j + 1));
+      }
+    }else{
+      return(ys);
+    }
+  }
+  let i = 0;
+  let j = 0;
+  let ys = [];
+  let zs = filterCycle(i,j);
+  return(ys);
+}
+```
+
+### elem関数
+
+```javascript
+//elem :: Eq a => a -> [a] -> Bool
+function elem(x,ys){
+  function boolCycle(i){
+    if(ys[i] !== undefined){
+      if(x === ys[i]){
+        return(true);
+      }else{
+        return(boolCycle(i + 1))
+      }
+    }else {
+      return(false)
+    }
+  }
+  let i = 0;
+  let y = boolCycle(i);
+  return(y);
+}
+```
+
+### all関数
+
+```javascript
+//all :: (a -> Bool) -> [a] -> Bool
+function any(func,xs){
+  function boolCycle(i){
+    if(xs[i] !== undefined){
+      if(func(xs[i])){
+        return(true);
+      }else{
+        return(boolCycle(i + 1))
+      }
+    }else {
+      return(false)
+    }
+  }
+  let i = 0;
+  let y = boolCycle(i);
+  return(y);
+}
+```
+
+### any関数
+
+```javascript
+//any :: (a -> Bool) -> [a] -> Bool
+function any(func,xs){
+  function boolCycle(i){
+    if(xs[i] !== undefined){
+      if(func(xs[i])){
+        return(true);
+      }else{
+        return(boolCycle(i + 1))
+      }
+    }else {
+      return(false)
+    }
+  }
+  let i = 0;
+  let y = boolCycle(i);
+  return(y);
+}
+```
+
+### nullSearch関数
 
 ```Javascript
 //nullCheckList :: [a] -> Bool
 function nullCheckList(xs) {
   function nullCheck(i){
-    if(xs[i] === undefined){
+    if(xs[i] === null){
       return(true);
     }else if (xs[i] === undefined){
-      return(nullCheck(i + 1));
-    }else{
       return(false);
+    }else{
+      return(nullCheck(i + 1));
     }
   }
   let i = 0;
@@ -242,7 +477,7 @@ function nullCheckList(xs) {
 ### sum関数
 
 ```Javascript
-//Num a => [a] -> a
+//sum :: Num a => [a] -> a
 function sum(xs){
   function plusCycle(i){
     if (xs[i] !== undefined) {
@@ -254,5 +489,65 @@ function sum(xs){
   let i = 0;
   let y = plusCycle(i);
   return(y);
+}
+```
+
+### prodact関数
+
+```javascript
+//product :: Num a => [a] -> a
+function product(xs){
+  function multiplCycle(i){
+    if (xs[i] !== undefined) {
+      return (xs[i] * multiplCycle(i + 1));
+    }else{
+      return (1);
+    }
+  }
+  let i = 0;
+  let y = multiplCycle(i);
+  return(y);
+}
+
+```
+
+### repeat関数
+
+```javascript
+
+//repeat :: a -> [a]
+function repeat(x , n){
+  function cycle(i){
+    if (i !== n) {
+      ys[i] = x;
+      return(cycle(i + 1));
+    }else{
+      return(ys);
+    }
+  }
+  let i = 0;
+  let ys = [];
+  let z = cycle(i);
+  return (ys);
+}
+```
+
+### iterate関数
+
+```javascript
+//iterate :: (a -> a) -> a -> [a]
+function iterate(func,x,n){
+  function funcCycle(i){
+    if(i !== n){
+      ys[i + 1] = func(ys[i]);
+      return(funcCycle(i + 1));
+    }else {
+      return(ys);
+    }
+  }
+  let i = 0;
+  let ys = [x];
+  let zs = funcCycle(i);
+  return(zs);
 }
 ```

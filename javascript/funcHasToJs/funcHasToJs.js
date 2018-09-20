@@ -144,8 +144,8 @@ function reverse(xs){
   return(zs);
 }
 
-/*arrPlus*/
-function arrPlus(xs,ys){
+/*arrConect*/
+function arrConect(xs,ys){
   function makeNewArr(i){
     if(i < xl + yl){
       if(i < xl){
@@ -165,6 +165,13 @@ function arrPlus(xs,ys){
   return(ws);
 }
 
+/*concat*/
+//concat :: [[a]] -> [a]
+function concat(xss){
+  let ys = foldLeft(arrConect,[],xss)
+  return(ys)
+}
+
 /*zipper*/
 function zipper(xs,ys){
   function makeNewArrTuple(i){
@@ -178,6 +185,23 @@ function zipper(xs,ys){
   let i = 0;
   let zs =[];
   let ws = makeNewArrTuple(i);
+  return(ws);
+}
+
+/*zipWith*/
+//(a -> b -> c) -> [a] -> [b] -> [c]
+function zipWith(func,xs,ys){
+  function funcCycle(i){
+    if(xs[i] !== undefined && ys[i] !== undefined){
+      zs[i] = func(xs[i],ys[i]);
+      return(funcCycle(i + 1));
+    }else{
+      return(zs);
+    }
+  }
+  let i = 0;
+  let zs = [];
+  let ws = funcCycle(i);
   return(ws);
 }
 
@@ -242,6 +266,63 @@ function filter(func,xs){
   return(ys);
 }
 
+/*elem*/
+//Eq a => a -> [a] -> Bool
+function elem(x,ys){
+  function boolCycle(i){
+    if(ys[i] !== undefined){
+      if(x === ys[i]){
+        return(true);
+      }else{
+        return(boolCycle(i + 1))
+      }
+    }else {
+      return(false)
+    }
+  }
+  let i = 0;
+  let y = boolCycle(i);
+  return(y);
+}
+
+/*all*/
+//(a -> Bool) -> [a] -> Bool
+function all(func,xs){
+  function boolCycle(i){
+    if(xs[i] !== undefined){
+      if(func(xs[i]) == false){
+        return(false);
+      }else{
+        return(boolCycle(i + 1))
+      }
+    }else {
+      return(true)
+    }
+  }
+  let i = 0;
+  let y = boolCycle(i);
+  return(y);
+}
+
+/*any*/
+//(a -> Bool) -> [a] -> Bool
+function any(func,xs){
+  function boolCycle(i){
+    if(xs[i] !== undefined){
+      if(func(xs[i])){
+        return(true);
+      }else{
+        return(boolCycle(i + 1))
+      }
+    }else {
+      return(false)
+    }
+  }
+  let i = 0;
+  let y = boolCycle(i);
+  return(y);
+}
+
 /*null*/
 function nullCheckList(xs) {
   function nullCheck(i){
@@ -262,9 +343,9 @@ function nullCheckList(xs) {
 function sum(xs){
   function plusCycle(i){
     if (xs[i] !== undefined) {
-      return (xs[i] + plusCycle(i + 1));
+      return(xs[i] + plusCycle(i + 1));
     }else{
-      return (0);
+      return(0);
     }
   }
   let i = 0;
@@ -278,9 +359,9 @@ function maxList(xs){
     if (xs[i] !== undefined) {
       if(y <= xs[i] || y === null){
         y = xs[i]
-        return (maxSaveCycle(i + 1));
+        return(maxSaveCycle(i + 1));
       }else{
-        return (maxSaveCycle(i + 1));
+        return(maxSaveCycle(i + 1));
       }
     }else{
       return(y);
@@ -298,9 +379,9 @@ function minList(xs){
     if (xs[i] !== undefined) {
       if(y >= xs[i] || y === null){
         y = xs[i]
-        return (minSaveCycle(i + 1));
+        return(minSaveCycle(i + 1));
       }else{
-        return (minSaveCycle(i + 1));
+        return(minSaveCycle(i + 1));
       }
     }else{
       return(y);
@@ -313,16 +394,55 @@ function minList(xs){
 }
 
 /*prodact*/
+//Num a => [a] -> a
+function product(xs){
+  function multiplCycle(i){
+    if (xs[i] !== undefined) {
+      return(xs[i] * multiplCycle(i + 1));
+    }else{
+      return(1);
+    }
+  }
+  let i = 0;
+  let y = multiplCycle(i);
+  return(y);
+}
+
+/*repeat*/
+//repeat :: Num b => a -> b-> [a]
+function repeat(x , n){
+  function cycle(i){
+    if (i !== n) {
+      ys[i] = x;
+      return(cycle(i + 1));
+    }else{
+      return(ys);
+    }
+  }
+  let i = 0;
+  let ys = [];
+  let z = cycle(i);
+  return (ys);
+}
+
+/*iterate*/
+//(a -> a) -> a -> [a]
+function iterate(func,x,n){
+  function funcCycle(i){
+    if(i !== n){
+      ys[i + 1] = func(ys[i]);
+      return(funcCycle(i + 1));
+    }else {
+      return(ys);
+    }
+  }
+  let i = 0;
+  let ys = [x];
+  let zs = funcCycle(i);
+  return(zs);
+}
 
 /*foldr*/
-
-/*elem*/
-
-/*all*/
-
-/*any*/
-
-/*zipWith*/
 
 /*insertSort*/
 
