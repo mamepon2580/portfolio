@@ -225,6 +225,20 @@ function mapping(func,xs){
 function foldLeft(func,y,xs){
   function fold(i){
     if(xs[i] !== undefined){
+      return(func(fold(i + 1)),xs[i]);
+    }else {
+      return(y);
+    }
+  }
+  let i = 0;
+  let z = fold(i);
+  return(z);
+}
+
+/*foldr*/
+function foldRight(func,y,xs){
+  function fold(i){
+    if(xs[i] !== undefined){
       return(func(xs[i],fold(i + 1)));
     }else {
       return(y);
@@ -451,3 +465,10 @@ function iterate(func,x,n){
 /*mergeSort*/
 
 /*quickSort*/
+function quickSort(xs){
+  function sort(i){
+    if(xs[i] < xs[0]){
+      ys[i] = 
+    }
+  }
+}
