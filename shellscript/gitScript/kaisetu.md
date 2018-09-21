@@ -14,7 +14,7 @@ https://github.com/mamepon2580/portfolio/tree/master/shellscript/gitScript
 
 ### pull
 
-- **`pull.sh`** はそのまま一緒に、リモートリポジトリ送りにされるのが嫌なので、ローカルリポジトリのすぐ上のディレクトリに保存しておきます。`pullScript` 中身はコマンドを固めただけです。
+- **`pull.sh`** はそのまま一緒にリモートリポジトリ送りにされるのが嫌なので、ローカルリポジトリのすぐ上のディレクトリに保存しておきます。`pullScript` 中身はコマンドを固めただけです。
 
 ```shell
 #pull.sh
@@ -30,21 +30,33 @@ echo "end pull script"
 ```
 
 ### push
-push.sh
-- **`push.sh`** も `pull.sh`と同様に、ローカルリポジトリのすぐ上のディレクトリに保存しておきます。`$(cat -)` は入力を受け付け`git commit -m` 引数としてコミットコメントを渡します。
+
+- **`push.sh`** も `pull.sh`と同様に、ローカルリポジトリのすぐ上のディレクトリに保存しておきます。`read` で変数 x を入力として受け付け`git commit -m` 引数としてコミットコメントを渡します。また変数 y を定義しその値によって分岐させます。※注意if文の条件は[スペース 条件式 スペース]にしないとうまくいきません←ここで二時間位悩んだ。
 
 ```shell
 #push.sh
 pushScript(){
  cd portfolio
  git add .
+ echo "all file in staging"
  echo "please comment"
- git commit -m $(cat -)
- git push origin master
+ read x
+ git commit -m $x
+ echo "all file in local repository"
+ echo "please :m is master , :b is brunch"
+ read y
+ if [ "$y" = ":m" ] ; then
+  git push origin master
+elif [ "$y" = ":b" ] ; then
+  echo "please brunch name"
+  read z
+  git push origin $z:$z
+ else
+  echo "error"
+fi
  cd ..
 }
 
 echo "start push script"
 pushScript
 echo "end push script"
-```
