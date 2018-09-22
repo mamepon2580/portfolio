@@ -23,8 +23,8 @@ insertSort [] = []
 insertSort (x:xs) = insert x (insertSort xs)
 
 make :: Int -> Int -> [Int] -> [Int] -> Int
-make n i _ []                           = i
-make n i _ (z:[])                       = i
+make n i _ []                         = i
+make n i _ (z:[])                     = i
 make n i (x:[]) (z:zs)                = make n i zs zs
 make n i (x:y:ys) (z:zs) | x + y >= n = (\t -> make n (i + 1) t t) (delete y zs)
                          | otherwise  = make n i (x:ys) (z:zs)
