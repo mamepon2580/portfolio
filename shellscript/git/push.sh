@@ -1,24 +1,25 @@
 #push.sh
 pushScript(){
- cd portfolio
+ dir=${pwd}
+ cd ~/github/portfolio
  git add .
  echo "all file in staging"
  echo "please comment"
- read x y
- git commit -m $x -m $y
+ read x
+ git commit -m $x
  echo "all file in local repository"
  echo "please :m is master , :b is brunch"
- read z
- if [ "$z" = ":m" ] ; then
+ read y
+ if [ "$y" = ":m" ] ; then
   git push origin master
-elif [ "$z" = ":b" ] ; then
+ elif [ "$y" = ":b" ] ; then
   echo "please brunch name"
-  read w
-  git push origin $w:$w
+  read z
+  git push origin $z:$z
  else
   echo "error"
 fi
- cd ..
+ cd $dir
 }
 
 echo "start push script"

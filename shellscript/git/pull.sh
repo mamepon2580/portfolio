@@ -1,8 +1,9 @@
 #pull.sh
 pullScript(){
- cd portfolio
+ dir=${pwd}
+ cd ~/github/portfolio
  git pull origin master
- cd ..
+ cd $dir
 }
 
 echo "start pull script"
