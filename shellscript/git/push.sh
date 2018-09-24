@@ -4,17 +4,17 @@ pushScript(){
  git add .
  echo "all file in staging"
  echo "please comment"
- read x
- git commit -m $x
+ read x y
+ git commit -m $x -m $y
  echo "all file in local repository"
  echo "please :m is master , :b is brunch"
- read y
- if [ "$y" = ":m" ] ; then
+ read z
+ if [ "$z" = ":m" ] ; then
   git push origin master
-elif [ "$y" = ":b" ] ; then
+elif [ "$z" = ":b" ] ; then
   echo "please brunch name"
-  read z
-  git push origin $z:$z
+  read w
+  git push origin $w:$w
  else
   echo "error"
 fi
