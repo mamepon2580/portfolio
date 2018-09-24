@@ -8,7 +8,7 @@ main(){
     if [ "$y" == "y" ];then
       rm -r $i
       echo "$i remove"
-    elif [ "$y" == "n" ]; then
+    elif [ "$y == "n ]; then
       echo "$i didn't"
     else
       echo "error"
