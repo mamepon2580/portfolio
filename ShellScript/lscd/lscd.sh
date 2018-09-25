@@ -1,15 +1,25 @@
+##lscd.sh
 main() {
-  ls
-  echo "please diectry name or :.. or :q"
-  read y
-  if [ "$y" == ":q" ] ; then
+  x=$(ls)
+  y=$(sed 's/ /\n/g' <<EOF
+$x
+EOF
+)
+  cat -n <<EOF
+$y
+EOF
+  y=($y)
+  echo "please diectry name or .. or q or number"
+  read z
+  if [ "$z" == "q" ] ; then
     echo "quit"
-  elif [ "$y" == ":.." ] ; then
+  elif [ "$z" == ".." ] ; then
     cd ..
     echo "change directry"
-    main  
+    main
   else
-    cd $y
+    z=$(expr $z + 1)
+    cd ${y[$z]}
     echo "change directry"
     main
   fi
