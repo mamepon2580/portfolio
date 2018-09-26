@@ -16,11 +16,13 @@ EOF
   elif [ "$z" == ".." ] ; then
     cd ..
     echo "change directry"
+    echo "${PWD##*/}"
     main
   else
-    z=$(expr $z + 1)
-    cd ${y[$z]}
+    w=$(expr $z - 1)
+    cd ${y[$w]}
     echo "change directry"
+    echo "${PWD##*/}"
     main
   fi
 }
