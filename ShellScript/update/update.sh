@@ -9,7 +9,7 @@ main(){
 $y
 END
 )
-      cp $i ~/github/portfolio$z/
+      cp -r $i ~/github/portfolio$z/
       echo "$i copy"
     elif [ "$w" == "n" ]; then
       echo "$i didn't"
