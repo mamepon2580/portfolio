@@ -31,7 +31,7 @@ function input1_2(str){
 }
 //二行目のStringをArreyとして取り出す
 function input2_1(str){
-  arr = str.split(' ');
+  arr = str.split('');
   return(arr);
 }
 //main関数
