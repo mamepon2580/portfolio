@@ -1,3 +1,5 @@
+//janken.js
+//IO処理
 var lines = [];
 var reader = require('readline').createInterface({
   input: process.stdin,
@@ -9,10 +11,14 @@ reader.on('line', (line) => {
 reader.on('close', () => {
   console.log(
     winMax(
+      //winMaxの第一引数
       makeGCPset(
+        //makeGCPsetの第一引数
         input1_1(lines[0]),
+        //makeGCPsetの第二引数
         input1_2(lines[0])
       ),
+      //winMaxの第二引数
       countGCP(input2_1(lines[1]))
     )
   )
@@ -72,7 +78,7 @@ function winMax(assArr,assYou){
   for(i = 0; i < assArr.length; i++){
     assI = assArr[i];
     //グーで勝った数
-    if(assI.G > assYou.C){
+    function ()if(assI.G > assYou.C){
       winG = assYou.C;
     }
     else{
