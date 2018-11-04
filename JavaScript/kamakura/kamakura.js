@@ -1,5 +1,6 @@
-
-
+//kamakura.
+//100
+//---------IO処理---------
 var lines = [];
 var reader = require('readline').createInterface({
   input: process.stdin,
@@ -13,7 +14,7 @@ reader.on('close', () => {
     volume(lines[0].split(" ").map(Number))
   )
 });
-
+//---------main関数---------
 function volume(arr){
   int = (arr[0] * arr[0] * arr[0]) - (arr[1] * arr[1] * arr[1]);
   return(int);

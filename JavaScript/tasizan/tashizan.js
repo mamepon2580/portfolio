@@ -1,4 +1,5 @@
 //tashizan.js
+//100
 //--------IO処理--------
 var lines = [];
 var reader = require('readline').createInterface({

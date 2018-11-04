@@ -1,3 +1,6 @@
+//medaru.js
+//100
+//---------IO処理---------
 var arrIn = [];
 var reader = require('readline').createInterface({
   input: process.stdin,
@@ -11,8 +14,7 @@ reader.on('close', () => {
     makeArr(arrIn)
   )
 });
-
-//
+//---------main関数---------
 function makeArr(arrIn){
   arrOut = [];
   arrOut[0] = "Gold " + arrIn[0];

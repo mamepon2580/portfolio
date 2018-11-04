@@ -1,3 +1,6 @@
+//settaichi.js
+//100
+//---------IO処理---------
 var lines = [];
 var reader = require('readline').createInterface({
   input: process.stdin,
@@ -11,7 +14,7 @@ reader.on('close', () => {
     abs(lines[0].split(" ").map(Number))
   )
 });
-
+//---------main関数---------
 function abs(arr){
   if(arr[0] >= 0){
     return(arr[0]);
