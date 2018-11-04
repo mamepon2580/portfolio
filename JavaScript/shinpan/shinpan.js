@@ -1,4 +1,5 @@
 //shinpan.js
+//100点
 //--------IO処理--------
 var lines = [];
 var reader = require('readline').createInterface({
