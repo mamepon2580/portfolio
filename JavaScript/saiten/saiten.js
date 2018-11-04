@@ -1,5 +1,5 @@
 //saiten.js
-//100
+//B100
 //---------IO処理---------
 var lines = [];
 var reader = require('readline').createInterface({
