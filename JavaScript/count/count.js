@@ -1,4 +1,5 @@
 //count.js
+//--------IO処理--------
 var lines = [];
 var reader = require('readline').createInterface({
   input: process.stdin,
@@ -10,8 +11,7 @@ reader.on('line', (line) => {
 reader.on('close', () => {
   console.log(count(lines));
 });
-
-//main関数
+//--------main関数--------
 //単語の数をカウント
 function count(arrey){
   //関数部分

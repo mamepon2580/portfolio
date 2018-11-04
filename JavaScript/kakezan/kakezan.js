@@ -1,5 +1,5 @@
 //kakezan.js
-//IO処理
+//--------IO処理--------
 var lines = [];
 var reader = require('readline').createInterface({
   input: process.stdin,
@@ -11,7 +11,7 @@ reader.on('line', (line) => {
 reader.on('close', () => {
   console.log(plus(StringToInt(lines)));
 });
-//IO関数
+//--------IO関数--------
 function StringToInt(str){
   let arrey = str[0].split(' ');
   return(arrey);

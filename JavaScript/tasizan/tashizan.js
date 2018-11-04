@@ -1,5 +1,5 @@
 //tashizan.js
-//IO処理
+//--------IO処理--------
 var lines = [];
 var reader = require('readline').createInterface({
   input: process.stdin,
@@ -11,7 +11,7 @@ reader.on('line', (line) => {
 reader.on('close', () => {
   console.log(plus(lines));
 });
-//main関数
+//--------main関数--------
 function plus(lines){
   let result = Number(lines[0]) + Number(lines[1]);
   return(result);

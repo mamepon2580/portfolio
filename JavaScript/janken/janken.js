@@ -1,5 +1,5 @@
 //janken.js
-//IO処理
+//--------IO処理--------
 var lines = [];
 var reader = require('readline').createInterface({
   input: process.stdin,
@@ -23,8 +23,7 @@ reader.on('close', () => {
     )
   )
 });
-//関数
-//IO関数
+//--------IO関数--------
 //一行目の一つめのIntを取り出す
 function input1_1(str){
   arr = str.split(' ');
@@ -40,7 +39,7 @@ function input2_1(str){
   let arr = str.split('');
   return(arr);
 }
-//main関数
+//--------main関数--------
 //出せる手の組み合わせのArreyを作る(xは試合回数、yは全体の指の本数)
 function makeGCPset(x,y){
   let assArr = [];
