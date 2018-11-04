@@ -1,5 +1,6 @@
 //guuki.js
-//D100
+//D101
+//100
 //--------IO処理--------
 var lines = [];
 var reader = require('readline').createInterface({
