@@ -15,9 +15,8 @@ reader.on('close', () => {
     translation(lines[0])
   );
 });
-//--------IO関数--------
-
 //--------main関数--------
+//文字列を文字の配列に直し変換し元に戻す関数
 function translation(strIn){
   charArr = strIn.split('');
   charArrOut = [];
