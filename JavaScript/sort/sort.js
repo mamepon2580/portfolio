@@ -12,15 +12,15 @@ reader.on('close', () => {
 
 //function
 function strArrToIntArrey(arrey1){
-  arrey2 = arrey1.map(Number);
+  let arrey2 = arrey1.map(Number);
   return(arrey2);
 }
 
-function sortFunc(arrey1){
-  arrey2 = arrey1.sort(function(x,y){
+function sortFunc(arr){
+  let arr = arr.sort(function(x,y){
           if( x < y ) return -1;
           if( x > y ) return 1;
           return 0;
   });
-  return(arrey2);
+  return(arr);
 }

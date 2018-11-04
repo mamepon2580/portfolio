@@ -32,23 +32,23 @@ function input1_1(str){
 }
 //一行目の二つめのIntを取り出す
 function input1_2(str){
-  arr = str.split(' ');
+  let arr = str.split(' ');
   return(Number(arr[1]));
 }
 //二行目のStringをArreyとして取り出す
 function input2_1(str){
-  arr = str.split('');
+  let arr = str.split('');
   return(arr);
 }
 //main関数
 //出せる手の組み合わせのArreyを作る(xは試合回数、yは全体の指の本数)
 function makeGCPset(x,y){
-  assArr = [];
+  let assArr = [];
   for(i = 0; 5 * i <= y; i++){
-    p = i;
+    let p = i;
     if((y - (5 * p)) % 2 === 0){
-      c = (y - (5 * 1)) / 2;
-      g = (x - p - c);
+      let c = (y - (5 * 1)) / 2;
+      let g = (x - p - c);
       assArr.push({G:g,C:c,P:p});
     }
   }
@@ -56,7 +56,7 @@ function makeGCPset(x,y){
 }
 //相手の出して来た手を数える
 function countGCP(arr){
-  ass = {G: 0, C: 0, P: 0};
+  let ass = {G: 0, C: 0, P: 0};
   for(i = 0; i <= arr.length; i++){
     switch(arr[i]){
       case "G":
@@ -74,34 +74,34 @@ function countGCP(arr){
 }
 //最大のかつ数を数える
 function winMax(assArr,assYou){
-  winMaxNum = 0;
+  let winMaxNum = 0;
   for(i = 0; i < assArr.length; i++){
-    assI = assArr[i];
+    let assI = assArr[i];
     //グーで勝った数
     function ()if(assI.G > assYou.C){
-      winG = assYou.C;
+      let winG = assYou.C;
     }
     else{
-      winG = assI.G;
+      let winG = assI.G;
     }
     //チョキで買った数
     if(assI.C > assYou.P){
-      winC = assYou.P;
+      let winC = assYou.P;
     }
     else{
-      winC = assI.C;
+      let winC = assI.C;
     }
     //パーで買った数
     if(assI.P > assYou.G){
-      winP = assYou.G;
+      let winP = assYou.G;
     }
     else{
-      winP = assI.P;
+      let winP = assI.P;
     }
     //買った数の合計
-    winNum = winG + winC + winP
+    let winNum = winG + winC + winP
     if(winMaxNum < winNum){
-      winMaxNum = winNum;
+      let winMaxNum = winNum;
     }
   }
   return(winMaxNum);

@@ -12,11 +12,11 @@ reader.on('close', () => {
 
 //function
 function StringToInt(str){
-  arrey = str[0].split(' ');
+  let arrey = str[0].split(' ');
   return(arrey);
 }
 
 function plus(arrey){
-  result = Number(arrey[0]) * Number(arrey[1]);
+  let result = Number(arrey[0]) * Number(arrey[1]);
   return(result);
 }

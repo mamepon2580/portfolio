@@ -22,7 +22,7 @@ function count(arrey){
     }
     return(associative)
   }
-  associative = {};
+  let associative = {};
   //連鎖的にplusを適応
   for(i = 0; i < arrey.length; i++){
     associative = plus(associative,arrey[i]);

@@ -12,6 +12,6 @@ reader.on('close', () => {
 
 //function
 function plus(lines){
-  result = Number(lines[0]) + Number(lines[1]);
+  let result = Number(lines[0]) + Number(lines[1]);
   return(result);
 }

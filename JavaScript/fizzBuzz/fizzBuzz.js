@@ -13,7 +13,7 @@ reader.on('close', () => {
 //function
 //1..nの配列作成
 function makeArrey(n){
-  arrey = []
+  let arrey = []
   for (i = 0;i < n; i++){
     arrey[i] = i + 1
   }
