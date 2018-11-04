@@ -1,3 +1,5 @@
+//yamaori.js
+//IO処理
 var lines = [];
 var reader = require('readline').createInterface({
   input: process.stdin,
@@ -9,12 +11,12 @@ reader.on('line', (line) => {
 reader.on('close', () => {
   console.log(origami(input1_1(lines[0])));
 });
-//
+//IO関数
 function input1_1(str){
   let arr = str.split(' ');
   return(Number(arr[0]));
 }
-//
+//main関数
 function origami(n){
   function reverce01(arr){
     let arrRev = [];

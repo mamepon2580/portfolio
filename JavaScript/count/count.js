@@ -1,3 +1,4 @@
+//count.js
 var lines = [];
 var reader = require('readline').createInterface({
   input: process.stdin,
@@ -10,9 +11,10 @@ reader.on('close', () => {
   console.log(count(lines));
 });
 
-//関数
+//main関数
 //単語の数をカウント
 function count(arrey){
+  //関数部分
   //Stringがすでにあれば+1なければ1を代入
   function plus(associative,string){
     if(associative[string] === undefined){
@@ -22,6 +24,7 @@ function count(arrey){
     }
     return(associative)
   }
+  //スクリプト部分
   let associative = {};
   //連鎖的にplusを適応
   for(i = 0; i < arrey.length; i++){

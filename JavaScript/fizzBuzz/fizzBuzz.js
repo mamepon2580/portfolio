@@ -1,3 +1,4 @@
+//fizzBuzz.js
 var lines = [];
 var reader = require('readline').createInterface({
   input: process.stdin,
@@ -10,7 +11,7 @@ reader.on('close', () => {
   console.log(makeArrey(Number(lines[0])).map(fizzBuzz));
 });
 
-//function
+//main関数
 //1..nの配列作成
 function makeArrey(n){
   let arrey = []
