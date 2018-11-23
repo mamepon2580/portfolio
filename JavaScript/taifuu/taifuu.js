@@ -1,5 +1,5 @@
-//settaichi.js
-//D012
+//taifuu.js
+//D048
 //100
 //---------IO処理---------
 var lines = [];
@@ -12,14 +12,15 @@ reader.on('line', (line) => {
 });
 reader.on('close', () => {
   console.log(
-    abs(lines[0].split(" ").map(Number))
+    saCycle(lines)
   )
 });
 //---------main関数---------
-function abs(arr){
-  if(arr[0] >= 0){
-    return(arr[0]);
-  }else{
-    return(arr[0] * (-1));
+//
+function saCycle(arrIntIn){
+  arrIntOut = [];
+  for(i = 0; i < arrIntIn.length - 1; i++){
+    arrIntOut.push(arrIntIn[i + 1] - arrIntIn[i])
   }
+  return(arrIntOut.join('\n'));
 }

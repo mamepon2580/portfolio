@@ -1,5 +1,5 @@
-//settaichi.js
-//D012
+//mail.js
+//D010
 //100
 //---------IO処理---------
 var lines = [];
@@ -12,14 +12,12 @@ reader.on('line', (line) => {
 });
 reader.on('close', () => {
   console.log(
-    abs(lines[0].split(" ").map(Number))
+     makeMail(lines[0],lines[1])
   )
 });
 //---------main関数---------
-function abs(arr){
-  if(arr[0] >= 0){
-    return(arr[0]);
-  }else{
-    return(arr[0] * (-1));
-  }
+//
+function makeMail(local,domain){
+  let mail = local + "@" + domain;
+  return(mail);
 }
